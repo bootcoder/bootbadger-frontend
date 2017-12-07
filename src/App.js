@@ -11,16 +11,22 @@ class App extends Component {
     this.state = {
       loginEmail: '',
       loginPassword: '',
-      loginName: '',
+      loginName: 'Jenna',
       jwtToken: window.localStorage.getItem('authToken'),
       showLoginForm: false,
-      showCreateForm: true
+      showRegistrationForm: true
     }
 
     this.updateLoginEmail = this.updateLoginEmail.bind(this)
     this.updateLoginPassword = this.updateLoginPassword.bind(this)
+    this.updateLoginName = this.updateLoginName.bind(this)
     this.handleUserLoginRequest = this.handleUserLoginRequest.bind(this)
     this.renderAuth = this.renderAuth.bind(this)
+    this.handleUserRegistrationRequest = this.handleUserRegistrationRequest.bind(this)
+  }
+
+  updateLoginName (name) {
+    this.setState({loginName: name})
   }
 
   updateLoginEmail (email) {
@@ -42,7 +48,28 @@ class App extends Component {
       console.log(data)
       appTarget.setState({
         loginPassword: '',
-        jwtToken: data.token
+        jwtToken: data.token,
+        showLoginForm: false
+      })
+      window.localStorage.setItem('authToken', data.token)
+    }).catch(data => {
+      window.alert(data)
+    })
+  }
+
+  handleUserRegistrationRequest () {
+    const appTarget = this
+    const payload = `?boot[email]=${this.state.loginEmail}&boot[password]=${this.state.loginPassword}&boot[name]=${this.state.loginName}`
+    window.fetch('https://bootbadger.herokuapp.com/users' + payload, {
+      method: 'POST'
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      appTarget.setState({
+        loginPassword: '',
+        jwtToken: data.token,
+        showRegistrationForm: false
       })
       window.localStorage.setItem('authToken', data.token)
     }).catch(data => {
@@ -62,7 +89,7 @@ class App extends Component {
         />
       )
     }
-    if (this.state.showCreateForm === true) {
+    if (this.state.showRegistrationForm === true) {
       return (
         <RegisterUserForm
           loginName={this.state.loginName}
