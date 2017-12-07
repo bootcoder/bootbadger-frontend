@@ -16,7 +16,8 @@ class App extends Component {
       loginName: 'Jenna',
       loginPassword: '',
       showLogin: false,
-      showRegistration: false
+      showRegistration: false,
+      showBoot: null
     }
 
     this.updateEmail = this.updateEmail.bind(this)
@@ -26,6 +27,8 @@ class App extends Component {
     this.renderApp = this.renderApp.bind(this)
     this.handleLogin = this.handleLogin.bind(this)
     this.handleRegistration = this.handleRegistration.bind(this)
+    this.handleShowAll = this.handleShowAll.bind(this)
+    this.handleShowBoot = this.handleShowBoot.bind(this)
     this.handleShowLogin = this.handleShowLogin.bind(this)
     this.handleShowRegistration = this.handleShowRegistration.bind(this)
     this.handleLogout = this.handleLogout.bind(this)
@@ -96,6 +99,14 @@ class App extends Component {
     this.setState({showRegistration: false, showLogin: true})
   }
 
+  handleShowAll () {
+    this.setState({showBoot: null})
+  }
+
+  handleShowBoot (showBoot) {
+    this.setState({showBoot})
+  }
+
   componentDidMount () {
     const appTarget = this
     window.fetch('https://bootbadger.herokuapp.com/boots')
@@ -151,6 +162,10 @@ class App extends Component {
         <button onClick={this.handleLogout}>Logout</button>
         <BootBadger
           boots={this.state.boots}
+          loginName={this.state.loginName}
+          showBoot={this.state.showBoot}
+          handleShowAll={this.handleShowAll}
+          handleShowBoot={this.handleShowBoot}
         />
       </div>
     )

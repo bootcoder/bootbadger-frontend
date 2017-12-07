@@ -4,7 +4,7 @@ class Boot extends Component {
   render () {
     return (
       <div className='Boot'>
-        {this.props.boot.name}
+        <button onClick={() => this.props.handleShowBoot(this.props.boot.name)}>{this.props.boot.name}</button>
       </div>
     )
   }
