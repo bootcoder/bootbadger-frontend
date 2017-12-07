@@ -10,15 +10,15 @@ class LoginForm extends Component {
 
   handleSubmit (event) {
     event.preventDefault()
-    this.props.handleUserLoginRequest()
+    this.props.handleLogin()
   }
 
   handleEmailChange (event) {
-    this.props.updateLoginEmail(event.target.value)
+    this.props.updateEmail(event.target.value)
   }
 
   handlePasswordChange (event) {
-    this.props.updateLoginPassword(event.target.value)
+    this.props.updatePassword(event.target.value)
   }
 
   render () {
@@ -27,7 +27,7 @@ class LoginForm extends Component {
         <form onSubmit={this.handleSubmit}>
           Email: <input
             onChange={this.handleEmailChange}
-            type='text'
+            type='email'
             value={this.props.loginEmail}
           />
           Password: <input

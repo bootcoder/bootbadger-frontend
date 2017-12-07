@@ -12,34 +12,38 @@ class App extends Component {
       loginEmail: '',
       loginPassword: '',
       loginName: 'Jenna',
-      jwtToken: window.localStorage.getItem('authToken'),
-      showLoginForm: false,
-      showRegistrationForm: true
+      authToken: window.localStorage.getItem('authToken'),
+      showLogin: false,
+      showRegistration: false
     }
 
-    this.updateLoginEmail = this.updateLoginEmail.bind(this)
-    this.updateLoginPassword = this.updateLoginPassword.bind(this)
-    this.updateLoginName = this.updateLoginName.bind(this)
-    this.handleUserLoginRequest = this.handleUserLoginRequest.bind(this)
+    this.updateEmail = this.updateEmail.bind(this)
+    this.updatePassword = this.updatePassword.bind(this)
+    this.updateName = this.updateName.bind(this)
     this.renderAuth = this.renderAuth.bind(this)
-    this.handleUserRegistrationRequest = this.handleUserRegistrationRequest.bind(this)
+    this.renderApp = this.renderApp.bind(this)
+    this.handleLogin = this.handleLogin.bind(this)
+    this.handleRegistration = this.handleRegistration.bind(this)
+    this.handleShowLogin = this.handleShowLogin.bind(this)
+    this.handleShowRegistration = this.handleShowRegistration.bind(this)
+    this.handleLogout = this.handleLogout.bind(this)
   }
 
-  updateLoginName (name) {
+  updateName (name) {
     this.setState({loginName: name})
   }
 
-  updateLoginEmail (email) {
+  updateEmail (email) {
     this.setState({loginEmail: email})
   }
 
-  updateLoginPassword (password) {
+  updatePassword (password) {
     this.setState({loginPassword: password})
   }
 
-  handleUserLoginRequest () {
+  handleLogin () {
     const appTarget = this
-    const payload = `?boot[email]=${this.state.loginEmail}&boot[password]=${this.state.loginPassword}`
+    const payload = `?session[email]=${this.state.loginEmail}&boot[password]=${this.state.loginPassword}`
     window.fetch('https://bootbadger.herokuapp.com/sessions' + payload, {
       method: 'POST'
     })
@@ -48,8 +52,8 @@ class App extends Component {
       console.log(data)
       appTarget.setState({
         loginPassword: '',
-        jwtToken: data.token,
-        showLoginForm: false
+        authToken: data.token,
+        showLogin: false
       })
       window.localStorage.setItem('authToken', data.token)
     }).catch(data => {
@@ -57,10 +61,15 @@ class App extends Component {
     })
   }
 
-  handleUserRegistrationRequest () {
+  handleLogout () {
+    window.localStorage.removeItem('authToken')
+    this.setState({authToken: null})
+  }
+
+  handleRegistration () {
     const appTarget = this
     const payload = `?boot[email]=${this.state.loginEmail}&boot[password]=${this.state.loginPassword}&boot[name]=${this.state.loginName}`
-    window.fetch('https://bootbadger.herokuapp.com/users' + payload, {
+    window.fetch('https://bootbadger.herokuapp.com/boots' + payload, {
       method: 'POST'
     })
     .then(res => res.json())
@@ -68,13 +77,21 @@ class App extends Component {
       console.log(data)
       appTarget.setState({
         loginPassword: '',
-        jwtToken: data.token,
-        showRegistrationForm: false
+        authToken: data.token,
+        showRegistration: false
       })
       window.localStorage.setItem('authToken', data.token)
     }).catch(data => {
       window.alert(data)
     })
+  }
+
+  handleShowRegistration () {
+    this.setState({showRegistration: true, showLogin: false})
+  }
+
+  handleShowLogin () {
+    this.setState({showRegistration: false, showLogin: true})
   }
 
   renderAuth () {
@@ -83,24 +100,41 @@ class App extends Component {
         <LoginForm
           email={this.state.loginEmail}
           password={this.state.loginPassword}
-          updateLoginEmail={this.updateLoginEmail}
-          updateLoginPassword={this.updateLoginPassword}
-          handleUserLoginRequest={this.handleUserLoginRequest}
+          updateEmail={this.updateEmail}
+          updatePassword={this.updatePassword}
+          handleLogin={this.handleLogin}
         />
       )
     }
-    if (this.state.showRegistrationForm === true) {
+    if (this.state.showRegistration === true) {
       return (
         <RegisterUserForm
           loginName={this.state.loginName}
           loginEmail={this.state.loginEmail}
           loginPassword={this.state.loginPassword}
-          updateLoginName={this.updateLoginName}
-          updateLoginEmail={this.updateLoginEmail}
-          updateLoginPassword={this.updateLoginPassword}
+          updateName={this.updateName}
+          updateEmail={this.updateEmail}
+          updatePassword={this.updatePassword}
+          handleRegistration={this.handleRegistration}
         />
       )
     }
+    if (this.state.showRegistration === false && this.state.showLogin === false) {
+      return (
+        <div>
+          <button onClick={this.handleShowRegistration}>Register</button>
+          <button onClick={this.handleShowLogin}>Login</button>
+        </div>
+      )
+    }
+  }
+
+  renderApp () {
+    return (
+      <div>
+        <button onClick={this.handleLogout}>Logout</button>
+      </div>
+    )
   }
 
   render () {
@@ -110,7 +144,7 @@ class App extends Component {
           <img src={logo} className='App-logo' alt='logo' />
           <h1 className='App-title'>BootBadger</h1>
         </header>
-        {this.renderAuth()}
+        {this.state.authToken === null ? this.renderAuth() : this.renderApp()}
       </div>
     )
   }

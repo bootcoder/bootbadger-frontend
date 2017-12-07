@@ -11,19 +11,19 @@ class RegisterUserForm extends Component {
 
   handleSubmit (event) {
     event.preventDefault()
-    this.props.handleUserLoginRequest()
+    this.props.handleRegistration()
   }
 
   handleEmailChange (event) {
-    this.props.updateLoginEmail(event.target.value)
+    this.props.updateEmail(event.target.value)
   }
 
   handlePasswordChange (event) {
-    this.props.updateLoginPassword(event.target.value)
+    this.props.updatePassword(event.target.value)
   }
 
   handleNameChange (event) {
-    this.props.updateLoginName(event.target.value)
+    this.props.updateName(event.target.value)
   }
 
   render () {
@@ -32,7 +32,7 @@ class RegisterUserForm extends Component {
         <form onSubmit={this.handleSubmit}>
           Email: <input
             onChange={this.handleEmailChange}
-            type='text'
+            type='email'
             value={this.props.loginEmail}
           />
           Password: <input
