@@ -9,15 +9,19 @@ class Boot extends Component {
         <h1>{this.props.boot.name}</h1>
         <SloganForm
           boot={this.props.boot}
+          handleSloganSubmit={this.props.handleSloganSubmit}
         />
-        {this.props.boot.slogans.map((slogan, index) => {
-          return (
-            <Slogan
-              key={index}
-              boot={this.props.boot}
-            />
-          )
-        })}
+        <ul className='slogan-list'>
+          {this.props.boot.slogans.map((slogan, index) => {
+            return (
+              <Slogan
+                key={index}
+                boot={this.props.boot}
+                slogan={slogan}
+              />
+            )
+          })}
+        </ul>
       </div>
     )
   }

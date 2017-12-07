@@ -33,6 +33,7 @@ class App extends Component {
     this.handleShowRegistration = this.handleShowRegistration.bind(this)
     this.handleSloganSubmit = this.handleSloganSubmit.bind(this)
     this.handleLogout = this.handleLogout.bind(this)
+    this.handleRefreshBoots = this.handleRefreshBoots.bind(this)
   }
 
   updateName (name) {
@@ -45,6 +46,24 @@ class App extends Component {
 
   updatePassword (password) {
     this.setState({loginPassword: password})
+  }
+
+  componentDidMount () {
+    this.handleRefreshBoots()
+  }
+
+  handleRefreshBoots () {
+    const appTarget = this
+    window.fetch('https://bootbadger.herokuapp.com/boots')
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      appTarget.setState({
+        boots: data
+      })
+    }).catch(data => {
+      window.alert(data)
+    })
   }
 
   handleLogin () {
@@ -68,11 +87,6 @@ class App extends Component {
     })
   }
 
-  handleLogout () {
-    window.localStorage.removeItem('authToken')
-    this.setState({authToken: null})
-  }
-
   handleRegistration () {
     const appTarget = this
     const payload = `?boot[email]=${this.state.loginEmail}&boot[password]=${this.state.loginPassword}&boot[name]=${this.state.loginName}`
@@ -94,6 +108,26 @@ class App extends Component {
     })
   }
 
+  handleSloganSubmit (bootID, slogan) {
+    const appTarget = this
+    const payload = `?slogan[token]=${this.state.authToken}&slogan[body]=${slogan}`
+    window.fetch(`https://bootbadger.herokuapp.com/boots/${bootID}/slogans` + payload, {
+      method: 'POST'
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      appTarget.handleRefreshBoots()
+    }).catch(data => {
+      window.alert(data)
+    })
+  }
+
+  handleLogout () {
+    window.localStorage.removeItem('authToken')
+    this.setState({authToken: null})
+  }
+
   handleShowRegistration () {
     this.setState({showRegistration: true, showLogin: false})
   }
@@ -108,24 +142,6 @@ class App extends Component {
 
   handleShowBoot (showBoot) {
     this.setState({showBoot})
-  }
-
-  handleSloganSubmit (boot, slogan) {
-
-  }
-
-  componentDidMount () {
-    const appTarget = this
-    window.fetch('https://bootbadger.herokuapp.com/boots')
-    .then(res => res.json())
-    .then(data => {
-      console.log(data)
-      appTarget.setState({
-        boots: data
-      })
-    }).catch(data => {
-      window.alert(data)
-    })
   }
 
   renderAuth () {
@@ -174,6 +190,7 @@ class App extends Component {
           showBoot={this.state.showBoot}
           handleShowAll={this.handleShowAll}
           handleShowBoot={this.handleShowBoot}
+          handleSloganSubmit={this.handleSloganSubmit}
         />
       </div>
     )

@@ -22,7 +22,28 @@
   font-size: large;
 }
 
+
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+.vote-img {
+  max-height: 30px;
+}
+
+.vote-container {
+  float: right;
+}
+
+.Slogan {
+  min-height: 100px;
+  background-color: gray;
+  margin: 5%;
+}
+
+.slogan-text {
+  padding: 10%;  
+  color: white;
 }

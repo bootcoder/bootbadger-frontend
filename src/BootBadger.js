@@ -11,7 +11,10 @@ class BootBadger extends Component {
 
   renderBoot () {
     const boot = this.props.boots.find((boot) => boot.name === this.props.showBoot)
-    return <Boot boot={boot} />
+    return (<Boot
+      handleSloganSubmit={this.props.handleSloganSubmit}
+      boot={boot} />
+    )
   }
 
   renderAll () {

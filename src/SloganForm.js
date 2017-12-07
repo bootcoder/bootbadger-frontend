@@ -18,7 +18,7 @@ class SloganForm extends Component {
 
   handleSubmit (event) {
     event.preventDefault()
-    this.props.submitNewSlogan(this.props.boot.name, this.state.sloganFormText)
+    this.props.handleSloganSubmit(this.props.boot.id, this.state.sloganFormText)
   }
 
   render () {
@@ -34,6 +34,7 @@ class SloganForm extends Component {
           value={this.state.sloganFormText}
           onChange={this.handleChange}
         />
+        <input type='submit' value='Sloganize!' />
       </form>
     )
   }
