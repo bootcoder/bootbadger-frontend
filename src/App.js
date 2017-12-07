@@ -61,6 +61,7 @@ class App extends Component {
         showLogin: false
       })
       window.localStorage.setItem('authToken', data.token)
+      window.localStorage.setItem('name', data.name)
     }).catch(data => {
       window.alert(data)
     })
@@ -86,6 +87,7 @@ class App extends Component {
         showRegistration: false
       })
       window.localStorage.setItem('authToken', data.token)
+      window.localStorage.setItem('name', data.name)
     }).catch(data => {
       window.alert(data)
     })

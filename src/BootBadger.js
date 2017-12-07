@@ -16,13 +16,15 @@ class BootBadger extends Component {
 
   renderAll () {
     return this.props.boots.map((boot, index) => {
-      return (
-        <Boot
-          key={index}
-          boot={boot}
-          handleShowBoot={this.props.handleShowBoot}
-        />
-      )
+      if (boot.name !== window.localStorage.getItem('name')) {
+        return (
+          <Boot
+            key={index}
+            boot={boot}
+            handleShowBoot={this.props.handleShowBoot}
+          />
+        )
+      }
     })
   }
   render () {
