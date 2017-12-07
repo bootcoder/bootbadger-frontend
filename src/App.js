@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import logo from './logo.svg'
 import LoginForm from './LoginForm'
+import RegisterUserForm from './RegisterUserForm'
 import './App.css'
 
 class App extends Component {
@@ -12,7 +13,8 @@ class App extends Component {
       loginPassword: '',
       loginName: '',
       jwtToken: window.localStorage.getItem('authToken'),
-      showCreateForm: false
+      showLoginForm: false,
+      showCreateForm: true
     }
 
     this.updateLoginEmail = this.updateLoginEmail.bind(this)
@@ -66,6 +68,9 @@ class App extends Component {
           loginName={this.state.loginName}
           loginEmail={this.state.loginEmail}
           loginPassword={this.state.loginPassword}
+          updateLoginName={this.updateLoginName}
+          updateLoginEmail={this.updateLoginEmail}
+          updateLoginPassword={this.updateLoginPassword}
         />
       )
     }

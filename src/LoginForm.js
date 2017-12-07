@@ -23,7 +23,7 @@ class LoginForm extends Component {
 
   render () {
     return (
-      <div>
+      <div className='LoginForm'>
         <form onSubmit={this.handleSubmit}>
           Email: <input
             onChange={this.handleEmailChange}
@@ -35,7 +35,7 @@ class LoginForm extends Component {
             type='password'
             value={this.props.loginPassword}
           />
-        <input type='submit' value='Login' />
+          <input type='submit' value='Login' />
         </form>
       </div>
     )
