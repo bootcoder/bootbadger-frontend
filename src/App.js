@@ -31,6 +31,7 @@ class App extends Component {
     this.handleShowBoot = this.handleShowBoot.bind(this)
     this.handleShowLogin = this.handleShowLogin.bind(this)
     this.handleShowRegistration = this.handleShowRegistration.bind(this)
+    this.handleSloganSubmit = this.handleSloganSubmit.bind(this)
     this.handleLogout = this.handleLogout.bind(this)
   }
 
@@ -109,6 +110,10 @@ class App extends Component {
     this.setState({showBoot})
   }
 
+  handleSloganSubmit (boot, slogan) {
+
+  }
+
   componentDidMount () {
     const appTarget = this
     window.fetch('https://bootbadger.herokuapp.com/boots')
@@ -162,6 +167,7 @@ class App extends Component {
     return (
       <div>
         <button onClick={this.handleLogout}>Logout</button>
+        <button onClick={this.handleShowAll}>Show All Boots</button>
         <BootBadger
           boots={this.state.boots}
           loginName={this.state.loginName}

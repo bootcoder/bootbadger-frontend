@@ -10,27 +10,28 @@ class BootBadger extends Component {
   }
 
   renderBoot () {
-    const boot = this.props.boots.find((boot) => boot.name === this.props.loginName)
-    return <Boot boot={boot} handleShowBoot={this.props.handleShowBoot} />
+    const boot = this.props.boots.find((boot) => boot.name === this.props.showBoot)
+    return <Boot boot={boot} />
   }
 
   renderAll () {
     return this.props.boots.map((boot, index) => {
       if (boot.name !== window.localStorage.getItem('name')) {
         return (
-          <Boot
+          <button
             key={index}
-            boot={boot}
-            handleShowBoot={this.props.handleShowBoot}
-          />
+            onClick={() => this.props.handleShowBoot(boot.name)}
+          >
+            {boot.name}
+          </button>
         )
       }
+      return null
     })
   }
   render () {
     return (
       <div className='BootBadger'>
-        <button onClick={this.props.handleShowAll}>Show All Boots</button>
         {this.props.showBoot ? this.renderBoot() : this.renderAll()}
       </div>
     )
