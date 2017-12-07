@@ -10,10 +10,11 @@ class App extends Component {
     super()
 
     this.state = {
-      loginEmail: '',
-      loginPassword: '',
-      loginName: 'Jenna',
       authToken: window.localStorage.getItem('authToken'),
+      boots: [],
+      loginEmail: '',
+      loginName: 'Jenna',
+      loginPassword: '',
       showLogin: false,
       showRegistration: false
     }
@@ -95,6 +96,20 @@ class App extends Component {
     this.setState({showRegistration: false, showLogin: true})
   }
 
+  componentDidMount () {
+    const appTarget = this
+    window.fetch('https://bootbadger.herokuapp.com/boots')
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      appTarget.setState({
+        boots: data
+      })
+    }).catch(data => {
+      window.alert(data)
+    })
+  }
+
   renderAuth () {
     if (this.state.showLogin === true) {
       return (
@@ -134,7 +149,9 @@ class App extends Component {
     return (
       <div>
         <button onClick={this.handleLogout}>Logout</button>
-        <BootBadger />
+        <BootBadger
+          boots={this.state.boots}
+        />
       </div>
     )
   }
