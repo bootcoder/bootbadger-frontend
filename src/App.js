@@ -239,7 +239,6 @@ class App extends Component {
     return (
       <div>
         <div className='app-header auth-btns'>
-          <div>Current User: {this.state.loginName}</div>
           <button onClick={this.handleShowAll}>All Boots</button>
           <button onClick={this.handleLogout}>Logout</button>
         </div>
@@ -264,6 +263,11 @@ class App extends Component {
           <img src={logo} className='App-logo' alt='logo' />
         </header>
         {this.state.authToken === null ? this.renderAuth() : this.renderApp()}
+        <div className='app-footer'>
+          <a href='https://github.com/bootcoder/bootbadger-frontend'>React Source</a>
+          Current User: {this.state.loginName}
+          <a href='https://github.com/kenrett/bootbadger-backend'>Rails Source</a>
+        </div>
       </div>
     )
   }
