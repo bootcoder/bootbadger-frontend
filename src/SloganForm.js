@@ -19,6 +19,7 @@ class SloganForm extends Component {
   handleSubmit (event) {
     event.preventDefault()
     this.props.handleSloganSubmit(this.props.boot.id, this.state.sloganFormText)
+    this.setState({sloganFormText: ''})
   }
 
   render () {
