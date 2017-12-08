@@ -239,8 +239,8 @@ class App extends Component {
       <div>
         <div className='app-header auth-btns'>
           <div>Current User: {this.state.loginName}</div>
-          <button onClick={this.handleLogout}>Logout</button>
           <button onClick={this.handleShowAll}>All Boots</button>
+          <button onClick={this.handleLogout}>Logout</button>
         </div>
         <BootBadger
           boots={this.state.boots}

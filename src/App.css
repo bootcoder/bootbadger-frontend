@@ -1,6 +1,6 @@
-/** {
+* {
   outline: 1px solid blue;
-}*/
+}
 
 .App {
   text-align: center;
@@ -74,7 +74,7 @@
 }
 
 .auth-btns {
-  margin: auto;
+  /*margin: auto;*/
   background-color: teal;
 }
 
@@ -82,7 +82,7 @@
   max-width: 10%;
   border-radius: 20px;
   margin: auto 5%;
-  padding: 1%;
+  padding: .5%;
 }
 
 .boot-btn {
