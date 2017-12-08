@@ -56,7 +56,8 @@
 }
 
 .vote-img {
-  max-height: 30px;
+  max-height: 50px;
+  padding: 0px 10px;
 }
 
 .Slogan {
@@ -94,6 +95,12 @@
   border-radius: 100px;
 }
 
+.boot-hero {
+  max-height: 200px;
+  max-width: 200px;
+  border-radius: 100px;
+}
+
 .boot-container {
   margin-top: 1%;
   height: 200px;
@@ -110,4 +117,8 @@
 .row:after {
   display: table;
   clear: both;
+}
+
+.white-text {
+  color: white;
 }

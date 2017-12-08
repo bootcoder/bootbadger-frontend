@@ -7,6 +7,7 @@ class Boot extends Component {
     return (
       <div className='Boot'>
         <h1>{this.props.boot.name}</h1>
+        <img className='boot-hero' src={this.props.boot.img_url} alt={this.props.boot.name} />
         <SloganForm
           boot={this.props.boot}
           handleSloganSubmit={this.props.handleSloganSubmit}

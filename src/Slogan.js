@@ -19,7 +19,7 @@ class Slogan extends Component {
   render () {
     return (
       <div className='Slogan'>
-        <div>Votes: {this.props.slogan.total_votes}</div>
+        <div className='white-text'>Votes: {this.props.slogan.total_votes}</div>
         <div className='vote-container'>
           <a
             onClick={this.handleUpVote}
