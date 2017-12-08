@@ -117,21 +117,21 @@ class App extends Component {
 
   handleLogin () {
     const appTarget = this
-    const payload = `?session[email]=${this.state.loginEmail}&boot[password]=${this.state.loginPassword}`
+    const payload = `?session[email]=${this.state.loginEmail}&session[password]=${this.state.loginPassword}`
     window.fetch('https://bootbadger.herokuapp.com/sessions' + payload, {
       method: 'POST'
     })
     .then(res => res.json())
     .then(data => {
       console.log(data)
+      window.localStorage.setItem('authToken', data.token)
+      window.localStorage.setItem('name', data.name)
       appTarget.setState({
         loginPassword: '',
         loginName: data.name,
         authToken: data.token,
         showLogin: false
       })
-      window.localStorage.setItem('authToken', data.token)
-      window.localStorage.setItem('name', data.name)
     }).catch(data => {
       window.alert(data)
     })
@@ -178,7 +178,7 @@ class App extends Component {
   handleLogout () {
     window.localStorage.removeItem('authToken')
     window.localStorage.removeItem('name')
-    this.setState({authToken: null})
+    this.setState({authToken: null, loginEmail: '', loginName: null})
   }
 
   handleShowRegistration () {
