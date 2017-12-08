@@ -130,7 +130,8 @@ class App extends Component {
         loginPassword: '',
         loginName: data.name,
         authToken: data.token,
-        showLogin: false
+        showLogin: false,
+        showBoot: null
       })
     }).catch(data => {
       window.alert(data)
