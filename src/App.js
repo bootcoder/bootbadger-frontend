@@ -160,8 +160,9 @@ class App extends Component {
   }
 
   handleSloganSubmit (bootID, slogan) {
+    const encodedSlogan = encodeURIComponent(slogan)
     const appTarget = this
-    const payload = `?slogan[token]=${this.state.authToken}&slogan[body]=${slogan}`
+    const payload = `?slogan[token]=${this.state.authToken}&slogan[body]=${encodedSlogan}`
     window.fetch(`https://bootbadger.herokuapp.com/boots/${bootID}/slogans` + payload, {
       method: 'POST'
     })
