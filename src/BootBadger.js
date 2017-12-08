@@ -29,12 +29,12 @@ class BootBadger extends Component {
               className='boot-btn row'
               onClick={() => this.props.handleShowBoot(boot.name)}
             >
+              <h4 className='boot-name'>{boot.name}</h4>
               <img
                 src={boot.img_url}
                 alt={boot.name}
                 className='boot-img'
               />
-              <h4 className='boot-name'>{boot.name}</h4>
             </a>
           </div>
         )
