@@ -1,6 +1,6 @@
-* {
+/** {
   outline: 1px solid blue;
-}
+}*/
 
 .App {
   text-align: center;
@@ -9,7 +9,7 @@
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 100px;
-  padding: 10px;
+  padding: 20px 0px;
 }
 
 .App-header {
@@ -28,7 +28,7 @@
 }
 
 .app-header {
-  padding: 5px;
+  /*padding: 5px;*/
   display: inline-block;
   width: 100%;
   background-color: gray;
@@ -79,7 +79,7 @@
 }
 
 .auth-btns button {
-  max-width: 10%;
+  max-width: 20%;
   border-radius: 20px;
   margin: auto 5%;
   padding: .5%;
