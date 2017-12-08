@@ -1,16 +1,17 @@
 import React, {Component} from 'react'
 
-class LoginForm extends Component {
+class RegisterUserForm extends Component {
   constructor () {
     super()
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleEmailChange = this.handleEmailChange.bind(this)
     this.handlePasswordChange = this.handlePasswordChange.bind(this)
+    this.handleNameChange = this.handleNameChange.bind(this)
   }
 
   handleSubmit (event) {
     event.preventDefault()
-    this.props.handleLogin()
+    this.props.handleRegistration()
   }
 
   handleEmailChange (event) {
@@ -21,9 +22,13 @@ class LoginForm extends Component {
     this.props.updatePassword(event.target.value)
   }
 
+  handleNameChange (event) {
+    this.props.updateName(event.target.value)
+  }
+
   render () {
     return (
-      <div className='LoginForm'>
+      <div className='RegisterUserForm'>
         <form onSubmit={this.handleSubmit}>
           Email: <input
             onChange={this.handleEmailChange}
@@ -35,6 +40,11 @@ class LoginForm extends Component {
             type='password'
             value={this.props.loginPassword}
           />
+          <select name='loginName' value={this.props.loginName} onChange={this.handleNameChange}>
+            {this.props.pendingSignup.map((boot) => {
+              return <option value={boot.name}>{boot.name}</option>
+            })}
+          </select>
           <input type='submit' value='Login' />
         </form>
       </div>
@@ -42,4 +52,4 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm
+export default RegisterUserForm
