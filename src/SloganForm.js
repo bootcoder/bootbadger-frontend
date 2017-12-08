@@ -29,11 +29,12 @@ class SloganForm extends Component {
       >
         <textarea
           name='slogan'
-          cols='30'
-          rows='10'
+          cols='90'
+          rows='5'
           value={this.state.sloganFormText}
           onChange={this.handleChange}
         />
+        <br />
         <input type='submit' value='Sloganize!' />
       </form>
     )

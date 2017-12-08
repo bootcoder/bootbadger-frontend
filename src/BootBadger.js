@@ -13,25 +13,36 @@ class BootBadger extends Component {
     const boot = this.props.boots.find((boot) => boot.name === this.props.showBoot)
     return (<Boot
       handleSloganSubmit={this.props.handleSloganSubmit}
+      handleSloganUpVote={this.props.handleSloganUpVote}
+      handleSloganDownVote={this.props.handleSloganDownVote}
       boot={boot} />
     )
   }
 
   renderAll () {
     return this.props.boots.map((boot, index) => {
-      if (boot.name !== window.localStorage.getItem('name')) {
+      if (boot.name !== this.props.loginName) {
         return (
-          <button
-            key={index}
-            onClick={() => this.props.handleShowBoot(boot.name)}
-          >
-            {boot.name}
-          </button>
+          <div className='boot-container col'>
+            <a
+              key={index}
+              className='boot-btn row'
+              onClick={() => this.props.handleShowBoot(boot.name)}
+            >
+              <img
+                src={boot.img_url}
+                alt={boot.name}
+                className='boot-img'
+              />
+              <h4 className='boot-name'>{boot.name}</h4>
+            </a>
+          </div>
         )
       }
       return null
     })
   }
+
   render () {
     return (
       <div className='BootBadger'>

@@ -18,6 +18,8 @@ class Boot extends Component {
                 key={index}
                 boot={this.props.boot}
                 slogan={slogan}
+                handleSloganUpVote={this.props.handleSloganUpVote}
+                handleSloganDownVote={this.props.handleSloganDownVote}
               />
             )
           })}

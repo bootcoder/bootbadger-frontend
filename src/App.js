@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import logo from './logo.svg'
+import logo from './dbc.png'
 import LoginForm from './LoginForm'
 import RegisterUserForm from './RegisterUserForm'
 import BootBadger from './BootBadger'
@@ -13,8 +13,9 @@ class App extends Component {
       authToken: window.localStorage.getItem('authToken'),
       boots: [],
       loginEmail: '',
-      loginName: 'Jenna',
+      loginName: window.localStorage.getItem('name'),
       loginPassword: '',
+      pendingSignup: [],
       showLogin: false,
       showRegistration: false,
       showBoot: null
@@ -34,6 +35,9 @@ class App extends Component {
     this.handleSloganSubmit = this.handleSloganSubmit.bind(this)
     this.handleLogout = this.handleLogout.bind(this)
     this.handleRefreshBoots = this.handleRefreshBoots.bind(this)
+    this.handleSloganUpVote = this.handleSloganUpVote.bind(this)
+    this.handleSloganDownVote = this.handleSloganDownVote.bind(this)
+    this.handlePendingSignup = this.handlePendingSignup.bind(this)
   }
 
   updateName (name) {
@@ -50,6 +54,7 @@ class App extends Component {
 
   componentDidMount () {
     this.handleRefreshBoots()
+    this.handlePendingSignup()
   }
 
   handleRefreshBoots () {
@@ -66,6 +71,50 @@ class App extends Component {
     })
   }
 
+  handlePendingSignup () {
+    const appTarget = this
+    window.fetch('https://bootbadger.herokuapp.com/sessions/list')
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      appTarget.setState({
+        pendingSignup: data
+      })
+    }).catch(data => {
+      window.alert(data)
+    })
+  }
+
+  handleSloganUpVote (bootID, sloganID) {
+    const appTarget = this
+    const payload = `?vote[token]=${this.state.authToken}`
+    window.fetch(`https://bootbadger.herokuapp.com/boots/${bootID}/slogans/${sloganID}/votes` + payload, {
+      method: 'POST'
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      appTarget.handleRefreshBoots()
+    }).catch(data => {
+      window.alert(data)
+    })
+  }
+
+  handleSloganDownVote (bootID, sloganID) {
+    const appTarget = this
+    const payload = `?vote[token]=${this.state.authToken}`
+    window.fetch(`https://bootbadger.herokuapp.com/boots/${bootID}/slogans/${sloganID}/votes` + payload, {
+      method: 'PUT'
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      appTarget.handleRefreshBoots()
+    }).catch(data => {
+      window.alert(data)
+    })
+  }
+
   handleLogin () {
     const appTarget = this
     const payload = `?session[email]=${this.state.loginEmail}&boot[password]=${this.state.loginPassword}`
@@ -77,6 +126,7 @@ class App extends Component {
       console.log(data)
       appTarget.setState({
         loginPassword: '',
+        loginName: data.name,
         authToken: data.token,
         showLogin: false
       })
@@ -99,6 +149,7 @@ class App extends Component {
       appTarget.setState({
         loginPassword: '',
         authToken: data.token,
+        loginName: data.name,
         showRegistration: false
       })
       window.localStorage.setItem('authToken', data.token)
@@ -125,6 +176,7 @@ class App extends Component {
 
   handleLogout () {
     window.localStorage.removeItem('authToken')
+    window.localStorage.removeItem('name')
     this.setState({authToken: null})
   }
 
@@ -159,6 +211,7 @@ class App extends Component {
     if (this.state.showRegistration === true) {
       return (
         <RegisterUserForm
+          pendingSignup={this.state.pendingSignup}
           loginName={this.state.loginName}
           loginEmail={this.state.loginEmail}
           loginPassword={this.state.loginPassword}
@@ -171,7 +224,8 @@ class App extends Component {
     }
     if (this.state.showRegistration === false && this.state.showLogin === false) {
       return (
-        <div>
+        <div className='auth-btns'>
+          <h1>BootBadger</h1>
           <button onClick={this.handleShowRegistration}>Register</button>
           <button onClick={this.handleShowLogin}>Login</button>
         </div>
@@ -182,8 +236,11 @@ class App extends Component {
   renderApp () {
     return (
       <div>
-        <button onClick={this.handleLogout}>Logout</button>
-        <button onClick={this.handleShowAll}>Show All Boots</button>
+        <div className='app-header auth-btns'>
+          <div>Current User: {this.state.loginName}</div>
+          <button onClick={this.handleLogout}>Logout</button>
+          <button onClick={this.handleShowAll}>All Boots</button>
+        </div>
         <BootBadger
           boots={this.state.boots}
           loginName={this.state.loginName}
@@ -191,6 +248,8 @@ class App extends Component {
           handleShowAll={this.handleShowAll}
           handleShowBoot={this.handleShowBoot}
           handleSloganSubmit={this.handleSloganSubmit}
+          handleSloganUpVote={this.handleSloganUpVote}
+          handleSloganDownVote={this.handleSloganDownVote}
         />
       </div>
     )
@@ -201,7 +260,6 @@ class App extends Component {
       <div className='App'>
         <header className='App-header'>
           <img src={logo} className='App-logo' alt='logo' />
-          <h1 className='App-title'>BootBadger</h1>
         </header>
         {this.state.authToken === null ? this.renderAuth() : this.renderApp()}
       </div>

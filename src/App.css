@@ -1,10 +1,15 @@
+/** {
+  border: 1px solid blue;
+}*/
+
 .App {
   text-align: center;
 }
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+  height: 100px;
+  padding: 10px;
 }
 
 .App-header {
@@ -22,28 +27,86 @@
   font-size: large;
 }
 
-
+.app-header {
+  padding: 5px;
+  display: inline-block;
+  width: 100%;
+  background-color: gray;
+}
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
 
+.vote-container {
+  padding: 5px;
+}
+
+.vote-container a {
+  padding: 5px;
+}
+
+.upvote {
+  float: right;
+}
+
+.downvote {
+  float: right;
+}
+
 .vote-img {
   max-height: 30px;
 }
 
-.vote-container {
-  float: right;
-}
-
 .Slogan {
-  min-height: 100px;
+  border-radius: 25px;
+  min-height: 50px;
   background-color: gray;
-  margin: 5%;
+  margin: 4%;
+  padding-top: 2%;
 }
 
 .slogan-text {
-  padding: 10%;  
+  padding: 5%;
   color: white;
+}
+
+.auth-btns {
+  margin: auto;
+  background-color: teal;
+}
+
+.auth-btns button {
+  max-width: 10%;
+  border-radius: 20px;
+  margin: auto 5%;
+  padding: 1%;
+}
+
+.boot-btn {
+  margin: 0.5%;
+}
+
+.boot-img {
+  max-height: 100px;
+  max-width: 100px;
+  border-radius: 100px;
+}
+
+.boot-container {
+  margin-top: 1%;
+}
+
+.boot-name {
+}
+
+.col {
+  float: left;
+  width: 33.33%;
+}
+
+.row:after {
+  display: table;
+  clear: both;
 }

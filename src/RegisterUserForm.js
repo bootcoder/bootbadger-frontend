@@ -41,29 +41,9 @@ class RegisterUserForm extends Component {
             value={this.props.loginPassword}
           />
           <select name='loginName' value={this.props.loginName} onChange={this.handleNameChange}>
-            <option value='Jenna'>Jenna</option>
-            <option value='Olivia'>Olivia</option>
-            <option value='Shannon'>Shannon</option>
-            <option value='Kenn'>Kenn</option>
-            <option value='Loraine'>Loraine</option>
-            <option value='Ally'>Ally</option>
-            <option value='James'>James</option>
-            <option value='Hunter'>Hunter</option>
-            <option value='Caroline'>Caroline</option>
-            <option value='Matthew'>Matthew</option>
-            <option value='May'>May</option>
-            <option value='Sar'>Sar</option>
-            <option value='Kam'>Kam</option>
-            <option value='Anthony'>Anthony</option>
-            <option value='Shambhavi'>Shambhavi</option>
-            <option value='Quynh'>Quynh</option>
-            <option value='Josh'>Josh</option>
-            <option value='Dillon'>Dillon</option>
-            <option value='Joe'>Joe</option>
-            <option value='Roger'>Roger</option>
-            <option value='Rebekah'>Rebekah</option>
-            <option value='Ken'>Ken</option>
-            <option value='Mark'>Mark</option>
+            {this.props.pendingSignup.map((boot) => {
+              return <option value={boot.name}>{boot.name}</option>
+            })}
           </select>
           <input type='submit' value='Login' />
         </form>
