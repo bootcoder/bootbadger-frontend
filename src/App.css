@@ -68,6 +68,14 @@
   padding-top: 2%;
 }
 
+.slogan-form-textarea {
+  width: 90%;
+}
+
+.slogan-list {
+  padding: 0px;
+}
+
 .slogan-text {
   padding: 5%;
   color: white;

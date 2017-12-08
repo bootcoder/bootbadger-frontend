@@ -30,8 +30,8 @@ class SloganForm extends Component {
       >
         <textarea
           name='slogan'
-          cols='90'
           rows='5'
+          className='slogan-form-textarea'
           value={this.state.sloganFormText}
           onChange={this.handleChange}
         />
